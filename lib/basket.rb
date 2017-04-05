@@ -1,6 +1,4 @@
 require_relative 'helper'
-# EntryGroup
-# EntryItem
 
 class Basket
   attr_reader :catalogue, :entries
@@ -24,7 +22,7 @@ class Basket
   end
 
   def sub_total
-    @sub_total ||= calculate_sub_total
+    calculate_sub_total
   end
 
   def delivery_charge
