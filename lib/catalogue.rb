@@ -29,10 +29,10 @@ class Catalogue
 
   private
     def build_products!(products)
-      products.reduce([]) { |list, params| list << Product.new(params) }
+      products.map { |params| Product.new(params) }
     end
 
     def build_offers!(offers)
-      offers.reduce([]) { |list, params| list << Offer.new(params) }
+      offers.map { |params| Offer.new(params) }
     end
 end
