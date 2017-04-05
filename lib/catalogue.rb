@@ -24,7 +24,7 @@ class Catalogue
   end
 
   def find_product_by_code(product_code)
-    @products.select { |product| product.code == product_code.to_s.upcase }.first
+    @products.find { |product| product.code == product_code.to_s.upcase }
   end
 
   private
