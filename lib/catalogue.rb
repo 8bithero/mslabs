@@ -8,11 +8,19 @@ class Catalogue
   ]
 
   OFFERS = [
+    # {
+    #   "type": "item_trigger",
+    #   "trigger_entries":  [ {"J01": 2} ],
+    #   "affected_entries": [ {"J01": 1} ],
+    #   "new_unit_price": nil,
+    #   "discount_percentage": 50
+    # },
     {
-      "trigger_entries":  [ {"J01": 2} ],
-      "affected_entries": [ {"J01": 1} ],
+      "type": "price_trigger",
+      "trigger_price":  6000,
+      "affected_entries": nil,
       "new_unit_price": nil,
-      "discount_percentage": 50
+      "discount_percentage": 10
     },
   ]
 
@@ -24,15 +32,22 @@ class Catalogue
   end
 
   def find_product_by_code(product_code)
-    @products.find { |product| product.code == product_code.to_s.upcase }
+    @products.find{ |product| product.code == product_code.to_s.upcase }
   end
 
   private
     def build_products!(products)
-      products.map { |params| Product.new(params) }
+      products.map{ |params| Product.new(params) }
     end
 
     def build_offers!(offers)
-      offers.map { |params| Offer.new(params) }
+      offers.map do |params|
+        case params[:type]
+        when "item_trigger"
+          Offer::ItemTrigger.new(params.merge(catalogue: self))
+        when "price_trigger"
+          Offer::PriceTrigger.new(params.merge(catalogue: self))
+        end
+      end
     end
 end
