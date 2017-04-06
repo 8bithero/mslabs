@@ -46,7 +46,7 @@ class Basket
     end
 
     def find_entry_by_product_code(product_code)
-      @entries.select { |entry| entry.product_code == product_code.to_s.upcase }.first
+      @entries.find { |entry| entry.product_code == product_code.to_s.upcase }
     end
 
     def new_entry(product_code)
